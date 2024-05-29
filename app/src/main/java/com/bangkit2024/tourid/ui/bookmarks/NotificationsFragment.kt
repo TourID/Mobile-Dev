@@ -1,4 +1,4 @@
-package com.bangkit2024.tourid.ui.notifications
+package com.bangkit2024.tourid.ui.bookmarks
 
 import android.os.Bundle
 import android.view.LayoutInflater

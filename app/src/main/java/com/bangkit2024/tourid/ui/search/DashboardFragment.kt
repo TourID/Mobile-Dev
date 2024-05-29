@@ -1,4 +1,4 @@
-package com.bangkit2024.tourid.ui.dashboard
+package com.bangkit2024.tourid.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

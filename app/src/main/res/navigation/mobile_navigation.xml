@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.bangkit2024.tourid.ui.dashboard.DashboardFragment"
+        android:name="com.bangkit2024.tourid.ui.search.DashboardFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_bookmark"
-        android:name="com.bangkit2024.tourid.ui.notifications.NotificationsFragment"
+        android:name="com.bangkit2024.tourid.ui.bookmarks.NotificationsFragment"
         android:label="@string/title_bookmark"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
