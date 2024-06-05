@@ -14,7 +14,7 @@ data class DummyResponse(
 	val skip: Int? = null,
 
 	@field:SerializedName("products")
-	val products: List<ProductsItem?>? = null
+	val products: List<ProductsItem>
 )
 
 data class ReviewsItem(

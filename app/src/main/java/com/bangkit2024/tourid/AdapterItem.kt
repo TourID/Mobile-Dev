@@ -1,13 +1,11 @@
 package com.bangkit2024.tourid
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit2024.tourid.data.ProductsItem
-import com.bangkit2024.tourid.databinding.ActivityMainBinding
 import com.bangkit2024.tourid.databinding.ItemRowDestinationBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
