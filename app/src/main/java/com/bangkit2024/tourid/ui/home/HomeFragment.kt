@@ -4,35 +4,55 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import com.bangkit2024.tourid.AdapterItem
+import com.bangkit2024.tourid.data.ProductsItem
 import com.bangkit2024.tourid.databinding.FragmentHomeBinding
+import com.bangkit2024.tourid.di.ViewModelFactory
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: AdapterItem
+    private val homeVM by viewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
-        return root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        adapter = AdapterItem()
+        binding.rvHome.adapter = adapter
+
+        homeVM.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        homeVM.setList()
+        homeVM.listItem.observe(viewLifecycleOwner) { list ->
+            setListUser(list)
+        }
+    }
+
+    private fun setListUser(list: List<ProductsItem>) = adapter.submitList(list)
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pbHome.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

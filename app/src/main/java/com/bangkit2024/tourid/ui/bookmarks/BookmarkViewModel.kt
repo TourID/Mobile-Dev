@@ -1,13 +1,13 @@
-package com.bangkit2024.tourid.ui.search
+package com.bangkit2024.tourid.ui.bookmarks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class BookmarkViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is search Fragment"
+        value = "This is bookmarks Fragment"
     }
     val text: LiveData<String> = _text
 }
