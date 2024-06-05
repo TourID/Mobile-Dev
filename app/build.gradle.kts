@@ -53,6 +53,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.ibrahimsn98.smoothbottombar)
+    implementation(libs.github.glide)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
