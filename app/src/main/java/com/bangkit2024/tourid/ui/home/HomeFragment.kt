@@ -9,8 +9,9 @@ import androidx.fragment.app.viewModels
 import com.bangkit2024.tourid.AdapterItem
 import com.bangkit2024.tourid.data.ProductsItem
 import com.bangkit2024.tourid.databinding.FragmentHomeBinding
-import com.bangkit2024.tourid.di.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     // This property is only valid between onCreateView and
@@ -18,9 +19,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: AdapterItem
-    private val homeVM by viewModels<HomeViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
-    }
+    private val homeVM : HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

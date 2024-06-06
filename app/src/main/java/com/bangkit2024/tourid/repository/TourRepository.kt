@@ -1,14 +1,12 @@
 package com.bangkit2024.tourid.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import com.bangkit2024.tourid.data.ApiService
-import com.bangkit2024.tourid.data.DummyResponse
 import com.bangkit2024.tourid.data.ProductsItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TourRepository private constructor(
+class TourRepository @Inject constructor(
     private val apiService: ApiService
 ) {
 

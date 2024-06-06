@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.bangkit2024.tourid.Event
 import com.bangkit2024.tourid.data.ProductsItem
 import com.bangkit2024.tourid.repository.TourRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(private val repo: TourRepository) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val repo: TourRepository) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
