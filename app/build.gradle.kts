@@ -22,6 +22,11 @@ android {
 
         val properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField(
+            "String",
+            "GITHUB_API_KEY",
+            "\"${properties.getProperty("GITHUB_API_KEY")}\""
+        )
         buildConfigField("String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\"")
     }
 

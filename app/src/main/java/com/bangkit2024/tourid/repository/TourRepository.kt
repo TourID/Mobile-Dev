@@ -1,55 +1,25 @@
 package com.bangkit2024.tourid.repository
 
 import com.bangkit2024.tourid.data.ApiService
-import com.bangkit2024.tourid.data.ProductsItem
+import com.bangkit2024.tourid.data.GithubUsersResponseItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class TourRepository @Inject constructor(
+class TourRepository private constructor(
     private val apiService: ApiService
 ) {
 
-    suspend fun getItemList(): List<ProductsItem> {
+    suspend fun getUserList(): List<GithubUsersResponseItem> {
         return withContext(Dispatchers.IO) {
-            val response = apiService.getProducts()
+            val response = apiService.userList()
             response
         }
     }
 
-    suspend fun searchUser(query: String): List<ProductsItem> {
-        val response = apiService.getResultProducts(query)
-        return response.products
+    suspend fun searchUser(query: String): List<GithubUsersResponseItem> {
+        val response = apiService.searchUser(query)
+        return response.items
     }
-
-//    suspend fun getLocation(): ListStoryResponse {
-//        val token = getSession().first().token
-//        return withContext(Dispatchers.IO) {
-//            val response = ApiConfig.getApiService(token).getLocationStory()
-//            response
-//        }
-//    }
-
-//    fun uploadPostStory(image: File, desc: String) = liveData {
-//        val token = getSession().first().token
-//        emit(ResultState.Loading)
-//        val requestBody = desc.toRequestBody("text/plain".toMediaType())
-//        val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
-//        val multiPartBody = MultipartBody.Part.createFormData(
-//            "photo",
-//            image.name,
-//            requestImageFile
-//        )
-//        try {
-//            val successResponse =
-//                ApiConfig.getApiService(token).addStory(multiPartBody, requestBody)
-//            emit(ResultState.Success(successResponse))
-//        } catch (e: HttpException) {
-//            val errorBody = e.response()?.errorBody()?.string()
-//            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-//            emit(errorResponse.message?.let { ResultState.Error(it) })
-//        }
-//    }
 
     companion object {
         @Volatile

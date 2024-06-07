@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit2024.tourid.data.ProductsItem
 import com.bangkit2024.tourid.repository.TourRepository
 import kotlinx.coroutines.launch
 

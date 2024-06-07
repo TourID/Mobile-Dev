@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/img_item_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/round_corner"
             android:scaleType="centerCrop"
@@ -35,12 +35,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="6dp"
             android:textSize="20sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toEndOf="@id/img_item_photo"
             card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintBottom_toTopOf="@id/tv_item_location"
             tools:text="Gunung Bromo" />
 
         <TextView
@@ -52,22 +55,11 @@
             android:layout_marginEnd="6dp"
             android:ellipsize="end"
             android:maxLines="3"
-            card_view:layout_constraintEnd_toEndOf="@id/tv_item_name"
-            card_view:layout_constraintStart_toStartOf="@id/tv_item_name"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@id/img_item_photo"
             card_view:layout_constraintTop_toBottomOf="@id/tv_item_name"
             tools:text="Pasuruan, Jawa Timur" />
-
-        <TextView
-            android:id="@+id/tv_item_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            card_view:layout_constraintEnd_toEndOf="@id/tv_item_location"
-            card_view:layout_constraintStart_toStartOf="@id/tv_item_location"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_item_location"
-            tools:text="* 4.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

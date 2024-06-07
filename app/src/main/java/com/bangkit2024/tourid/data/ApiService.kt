@@ -5,11 +5,11 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("products")
-    fun getProducts(): List<ProductsItem>
+    @GET("users")
+    suspend fun userList(): List<GithubUsersResponseItem>
 
-    @GET("search/products")
-    fun getResultProducts(
+    @GET("search/users")
+    suspend fun searchUser(
         @Query("q") q: String
-    ): DummyResponse
+    ): GithubSearchResponse
 }

@@ -19,7 +19,7 @@
         android:id="@+id/navigation_search"
         android:name="com.bangkit2024.tourid.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_dashboard" >
         <action
             android:id="@+id/action_secondFragment_to_thirdFragment"
             app:destination="@id/navigation_bookmark"/>
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_bookmark"
-        android:name="com.bangkit2024.tourid.ui.bookmarks.BookmarkFragment"
+        android:name="com.bangkit2024.tourid.ui.bookmarks.NotificationsFragment"
         android:label="@string/title_bookmark"
-        tools:layout="@layout/fragment_bookmarks" />
+        tools:layout="@layout/fragment_notifications" />
 </navigation>
