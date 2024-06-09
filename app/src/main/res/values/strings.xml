@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_bookmark">Bookmarks</string>
+    <string name="title_person">Account</string>
     <string name="min_temp">Min</string>
     <string name="max_temp">Max</string>
     <string name="city_title">City</string>
@@ -10,4 +11,5 @@
     <string name="destination_name">Destination Name</string>
     <string name="destination_location">Destination Location</string>
     <string name="destination_rating">Destination Rating</string>
+    <string name="search_hint">looking something...</string>
 </resources>

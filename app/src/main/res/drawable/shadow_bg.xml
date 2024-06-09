@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#E2E2E2"/> <!-- Warna shadow -->
+            <corners android:radius="46dp"/> <!-- Radius sudut shadow -->
+            <padding android:bottom="10dp"/> <!-- Jarak bayangan hanya pada bagian bawah -->
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#237AEE" /> <!-- Warna background -->
+            <corners android:bottomLeftRadius="40dp"
+                android:bottomRightRadius="40dp"/> <!-- Radius sudut background -->
+        </shape>
+    </item>
+</layer-list>

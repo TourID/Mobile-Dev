@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit2024.tourid.databinding.FragmentNotificationsBinding
+import com.bangkit2024.tourid.databinding.FragmentBookmarkBinding
 
-class NotificationsFragment : Fragment() {
+class BookmarkFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentBookmarkBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this)[NotificationsViewModel::class.java]
+        val bookmarkViewModel =
+            ViewModelProvider(this)[BookmarkViewModel::class.java]
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        bookmarkViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
