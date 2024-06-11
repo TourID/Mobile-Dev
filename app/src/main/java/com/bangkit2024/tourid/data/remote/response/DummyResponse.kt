@@ -1,4 +1,4 @@
-package com.bangkit2024.tourid.data
+package com.bangkit2024.tourid.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 

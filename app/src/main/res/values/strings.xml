@@ -12,4 +12,5 @@
     <string name="destination_location">Destination Location</string>
     <string name="destination_rating">Destination Rating</string>
     <string name="search_hint">looking something...</string>
+    <string name="save_bookmark">Save Bookmark</string>
 </resources>
