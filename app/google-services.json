@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "223829109607",
+    "project_id": "capstone-tourid",
+    "storage_bucket": "capstone-tourid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223829109607:android:2091895e83b141e7d71dc2",
+        "android_client_info": {
+          "package_name": "com.bangkit2024.tourid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223829109607-fhb1h85gdr1rjphouplvfmqrr5qi6h4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bangkit2024.tourid",
+            "certificate_hash": "2f1133da41386a2f5f718c958a5b922c859e3432"
+          }
+        },
+        {
+          "client_id": "223829109607-agjcuis3d3t9c3br4virlh4np46kta91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClNmXy6HFiOAZC8TWoRrO5Fypf2foHga0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223829109607-agjcuis3d3t9c3br4virlh4np46kta91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
