@@ -54,19 +54,20 @@ class HomeViewModel(private val repo: TourRepository) : ViewModel() {
 
     fun getHeadlineNews() = repo.getHeadlineNews()
 
-    fun getBookmarkedNews() = repo.getBookmarkedNews()
-
     fun saveNews(news: EntityTour) {
         viewModelScope.launch {
             repo.setNewsBookmark(news, true)
         }
+        showToast("Get Bookmark")
     }
 
     fun deleteNews(news: EntityTour) {
         viewModelScope.launch {
             repo.setNewsBookmark(news, false)
         }
+        showToast("Delete Bookmark")
     }
+
     private fun showToast(msg: String) {
         _toastText.value = Event(msg)
     }

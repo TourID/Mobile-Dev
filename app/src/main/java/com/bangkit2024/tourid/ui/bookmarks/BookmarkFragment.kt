@@ -4,35 +4,57 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit2024.tourid.adapter.AdapterItem
 import com.bangkit2024.tourid.databinding.FragmentBookmarkBinding
+import com.bangkit2024.tourid.di.Injection
 
 class BookmarkFragment : Fragment() {
 
     private var _binding: FragmentBookmarkBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get() = _binding
+    private lateinit var bookmarkAdapter: AdapterItem
+    private val bookmarkVM by viewModels<BookmarkViewModel> {
+        Injection.provideViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val bookmarkViewModel =
-            ViewModelProvider(this)[BookmarkViewModel::class.java]
+    ): View? {
 
         _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding?.root
+    }
 
-        val textView: TextView = binding.textNotifications
-        bookmarkViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bookmarkAdapter = AdapterItem { user ->
+            if (user.isBookmarked) bookmarkVM.deleteNews(user) else bookmarkVM.saveNews(user)
         }
-        return root
+
+        binding?.rvSearch?.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = bookmarkAdapter
+        }
+
+        bookmarkVM.isLoading.observe(viewLifecycleOwner) { loading ->
+            showLoading(loading)
+        }
+
+        bookmarkVM.getBookmarkedNews().observe(viewLifecycleOwner) { bookmark ->
+            binding?.pbBookmark?.visibility = View.GONE
+            bookmarkAdapter.submitList(bookmark)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding?.pbBookmark?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
