@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.bangkit2024.tourid" />
+                  <option name="mobileSdkAppId" value="1:223829109607:android:2091895e83b141e7d71dc2" />
+                  <option name="projectId" value="capstone-tourid" />
+                  <option name="projectNumber" value="223829109607" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

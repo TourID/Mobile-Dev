@@ -3,8 +3,8 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.google.gms.google.services)
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.bangkit2024.tourid"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -65,7 +65,6 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    implementation(libs.androidx.legacy.support.v4)
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
     implementation(libs.androidx.activity)
@@ -78,6 +77,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.github.glide)
+    implementation(libs.circleimageview)
     implementation(libs.androidx.activity.ktx)
 
     implementation(libs.retrofit)

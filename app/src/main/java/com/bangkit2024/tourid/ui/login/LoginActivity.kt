@@ -3,6 +3,7 @@ package com.bangkit2024.tourid.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -38,15 +40,40 @@ class LoginActivity : AppCompatActivity() {
         binding.signInButton.setOnClickListener {
             signIn()
         }
+
+        binding.btnAnonymous.setOnClickListener {
+            guestSignIn()
+        }
+    }
+
+    private fun guestSignIn() {
+        auth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInAnonymously:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInAnonymously:failure", task.exception)
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    updateUI(null)
+                }
+            }
     }
 
     private fun signIn() {
-        val credentialManager = CredentialManager.create(this)
+        val credentialManager = CredentialManager.create(this) //import from androidx.CredentialManager
         val googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
             .setServerClientId(getString(R.string.default_web_client_id))
             .build()
-        val request = GetCredentialRequest.Builder()
+        val request = GetCredentialRequest.Builder() //import from androidx.CredentialManager
             .addCredentialOption(googleIdOption)
             .build()
 
@@ -58,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 )
                 handleSignIn(result)
             } catch (e: GetCredentialException) { //import from androidx.CredentialManager
-                Log.d("Error", e.message.toString())
+                Log.d("Error GetCredebtial Response", e.message.toString())
             }
         }
     }
@@ -108,36 +135,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        val googleCredential = oneTapClient.getSignInCredentialFromIntent(data)
-//        val idToken = googleCredential.googleIdToken
-//        when {
-//            idToken != null -> {
-//                // Got an ID token from Google. Use it to authenticate
-//                // with Firebase.
-//                val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-//                auth.signInWithCredential(firebaseCredential)
-//                    .addOnCompleteListener(this) { task ->
-//                        if (task.isSuccessful) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithCredential:success")
-//                            val user = auth.currentUser
-//                            updateUI(user)
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithCredential:failure", task.exception)
-//                            updateUI(null)
-//                        }
-//                    }
-//            }
-//            else -> {
-//                // Shouldn't happen.
-//                Log.d(TAG, "No ID token!")
-//            }
-//        }
-//    }
 
     override fun onStart() {
         super.onStart()
