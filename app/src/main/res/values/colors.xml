@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_80">#CDFFFFFF</color>
     <color name="navy">#1F5696</color>
+    <color name="colorTransparentWhite">#33FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
