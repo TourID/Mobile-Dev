@@ -22,4 +22,7 @@
     <string name="sports">sports</string>
     <string name="technology">technology</string>
     <string name="Lewati"><u>Lewati</u></string>
+    <string name="next">Next</string>
+    <string name="start">Start</string>
+    <string name="skip">Skip</string>
 </resources>
