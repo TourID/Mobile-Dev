@@ -50,8 +50,9 @@ package com.bangkit2024.tourid.di
 //}
 
 import android.content.Context
-import com.bangkit2024.tourid.data.ApiConfig
-import com.bangkit2024.tourid.data.ApiService
+import com.bangkit2024.tourid.data.local.room.DatabaseTour
+import com.bangkit2024.tourid.data.remote.retrofit.ApiConfig
+import com.bangkit2024.tourid.data.remote.retrofit.ApiService
 import com.bangkit2024.tourid.repository.TourRepository
 
 object Injection {
@@ -61,7 +62,9 @@ object Injection {
 
     private fun provideRepository(context: Context): TourRepository {
         val apiService = provideApiService()
-        return TourRepository.getInstance(apiService)
+        val database = DatabaseTour.getInstance(context)
+        val dao = database.bookmarkDao()
+        return TourRepository.getInstance(apiService, dao)
     }
 
     fun provideViewModelFactory(context: Context): ViewModelFactory {

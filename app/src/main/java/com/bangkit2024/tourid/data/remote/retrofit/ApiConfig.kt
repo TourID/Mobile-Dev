@@ -1,7 +1,7 @@
-package com.bangkit2024.tourid.data
+package com.bangkit2024.tourid.data.remote.retrofit
 
+import com.bangkit2024.tourid.BuildConfig.API_KEY
 import com.bangkit2024.tourid.BuildConfig.BASE_URL
-import com.bangkit2024.tourid.BuildConfig.GITHUB_API_KEY
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -16,7 +16,7 @@ class ApiConfig {
             val authInterceptor = Interceptor { chain ->
                 val req = chain.request()
                 val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "token $GITHUB_API_KEY")
+                    .addHeader("Authorization", "token $API_KEY")
                     .build()
                 chain.proceed(requestHeaders)
             }
