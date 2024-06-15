@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit2024.tourid.Event
-import com.bangkit2024.tourid.data.local.entity.EntityTour
+import com.bangkit2024.tourid.data.local.entity.EntityTourism
+import com.bangkit2024.tourid.data.remote.response.TourResponseAllItem
 import com.bangkit2024.tourid.repository.TourRepository
 import kotlinx.coroutines.launch
 
@@ -17,21 +18,34 @@ class SearchViewModel(private val repo: TourRepository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getHeadlineNews() = repo.getHeadlineNews()
+    private val _listTour = MutableLiveData<List<TourResponseAllItem>>()
+    val listTour: LiveData<List<TourResponseAllItem>> = _listTour
 
-    fun getBookmarkedNews() = repo.getBookmarkedNews()
+//    fun getHeadlineNews(category: String) = repo.getHeadlineNews(category)
+//
+//    fun saveNews(news: EntityTour) {
+//        viewModelScope.launch {
+//            repo.setNewsBookmark(news, true)
+//        }
+//        showToast("Get Bookmark")
+//    }
+//
+//    fun deleteNews(news: EntityTour) {
+//        viewModelScope.launch {
+//            repo.setNewsBookmark(news, false)
+//        }
+//        showToast("Delete Bookmark")
+//    }
 
-    fun saveNews(news: EntityTour) {
-        viewModelScope.launch {
-            repo.setNewsBookmark(news, true)
-        }
+    fun getTourism() = repo.getListTour()
+
+    fun saveTour(tour: EntityTourism) = viewModelScope.launch {
+        repo.setTourBookmark(tour, true)
         showToast("Get Bookmark")
     }
 
-    fun deleteNews(news: EntityTour) {
-        viewModelScope.launch {
-            repo.setNewsBookmark(news, false)
-        }
+    fun deleteTour(tour: EntityTourism) = viewModelScope.launch {
+        repo.setTourBookmark(tour, false)
         showToast("Delete Bookmark")
     }
 

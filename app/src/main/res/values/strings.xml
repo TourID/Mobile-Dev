@@ -11,7 +11,15 @@
     <string name="destination_name">Destination Name</string>
     <string name="destination_location">Destination Location</string>
     <string name="destination_rating">Destination Rating</string>
-    <string name="search_hint">looking something...</string>
+    <string name="search_hint" tools:ignore="TypographyEllipsis">looking something...</string>
     <string name="save_bookmark">Save Bookmark</string>
     <string name="default_web_client_id" tools:ignore="TypographyDashes">223829109607-agjcuis3d3t9c3br4virlh4np46kta91.apps.googleusercontent.com</string>
+    <string name="general">general</string>
+    <string name="entertainment">entertainment</string>
+    <string name="health">health</string>
+    <string name="business">business</string>
+    <string name="science">science</string>
+    <string name="sports">sports</string>
+    <string name="technology">technology</string>
+    <string name="Lewati"><u>Lewati</u></string>
 </resources>

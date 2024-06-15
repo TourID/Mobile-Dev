@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit2024.tourid.adapter.AdapterItem
 import com.bangkit2024.tourid.databinding.FragmentBookmarkBinding
-import com.bangkit2024.tourid.di.Injection
+import com.bangkit2024.tourid.di.InjectionTourism
 
 class BookmarkFragment : Fragment() {
 
@@ -17,7 +17,7 @@ class BookmarkFragment : Fragment() {
     private val binding get() = _binding
     private lateinit var bookmarkAdapter: AdapterItem
     private val bookmarkVM by viewModels<BookmarkViewModel> {
-        Injection.provideViewModelFactory(requireContext())
+        InjectionTourism.provideViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -34,7 +34,7 @@ class BookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bookmarkAdapter = AdapterItem { user ->
-            if (user.isBookmarked) bookmarkVM.deleteNews(user) else bookmarkVM.saveNews(user)
+            if (user.isBookmarked) bookmarkVM.deleteTour(user) else bookmarkVM.saveTour(user)
         }
 
         binding?.rvSearch?.apply {
@@ -47,7 +47,7 @@ class BookmarkFragment : Fragment() {
             showLoading(loading)
         }
 
-        bookmarkVM.getBookmarkedNews().observe(viewLifecycleOwner) { bookmark ->
+        bookmarkVM.getBookmarkedTour().observe(viewLifecycleOwner) { bookmark ->
             binding?.pbBookmark?.visibility = View.GONE
             bookmarkAdapter.submitList(bookmark)
         }

@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit2024.tourid.adapter.AdapterItem
 import com.bangkit2024.tourid.databinding.FragmentHomeBinding
-import com.bangkit2024.tourid.di.Injection
+import com.bangkit2024.tourid.di.InjectionTourism
 import com.bangkit2024.tourid.repository.Result
 
 class HomeFragment : Fragment() {
@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding
     private lateinit var homeAdapter: AdapterItem
     private val homeVM by viewModels<HomeViewModel> {
-        Injection.provideViewModelFactory(requireContext())
+        InjectionTourism.provideViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -35,8 +35,46 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeAdapter = AdapterItem {user ->
-            if (user.isBookmarked) homeVM.deleteNews(user) else homeVM.saveNews(user)
+//        homeAdapter = AdapterItem {user ->
+//            if (user.isBookmarked) homeVM.deleteNews(user) else homeVM.saveNews(user)
+//        }
+//
+//        binding?.rvHome?.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            setHasFixedSize(true)
+//            adapter = homeAdapter
+//        }
+//
+//        homeVM.isLoading.observe(viewLifecycleOwner) { loading ->
+//            showLoading(loading)
+//        }
+//
+//        homeVM.getHeadlineNewsHome().observe(viewLifecycleOwner) { result ->
+//            if (result != null) {
+//                when (result) {
+//                    is Result.Loading -> {
+//                        binding?.pbHome?.visibility = View.VISIBLE
+//                    }
+//                    is Result.Success -> {
+//                        binding?.pbHome?.visibility = View.GONE
+//                        val newsData = result.data
+//                        homeAdapter.submitList(newsData)
+//                    }
+//                    is Result.Error -> {
+//                        binding?.pbHome?.visibility = View.GONE
+//                        Toast.makeText(
+//                            context,
+//                            "Terjadi Kesalahan" + result.error,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                        Log.e("HomeFragment", "{${result.error}}")
+//                    }
+//                }
+//            }
+//        }
+
+        homeAdapter = AdapterItem { user ->
+            if (user.isBookmarked) homeVM.deleteTour(user) else homeVM.saveTour(user)
         }
 
         binding?.rvHome?.apply {
@@ -49,17 +87,19 @@ class HomeFragment : Fragment() {
             showLoading(loading)
         }
 
-        homeVM.getHeadlineNews().observe(viewLifecycleOwner) { result ->
+        homeVM.getTourism().observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
                         binding?.pbHome?.visibility = View.VISIBLE
                     }
+
                     is Result.Success -> {
                         binding?.pbHome?.visibility = View.GONE
                         val newsData = result.data
                         homeAdapter.submitList(newsData)
                     }
+
                     is Result.Error -> {
                         binding?.pbHome?.visibility = View.GONE
                         Toast.makeText(

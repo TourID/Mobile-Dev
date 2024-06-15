@@ -24,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:layout_marginBottom="2dp"
             android:layout_marginHorizontal="26dp"
             android:text="Search"
@@ -50,11 +52,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topbar">
 
-
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_height="match_parent"
+            android:padding="6dp"
             android:orientation="horizontal">
 
             <Button
@@ -64,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Semua"
+                android:text="@string/general"
                 android:textSize="12sp" />
 
             <Button
@@ -74,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Bahari"
+                android:text="@string/health"
                 android:textSize="12sp" />
 
             <Button
@@ -84,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Budaya"
+                android:text="@string/business"
                 android:textSize="12sp" />
 
             <Button
@@ -94,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Cagar Alam"
+                android:text="@string/sports"
                 android:textSize="12sp" />
 
             <Button
@@ -104,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Pusat Perbelanjaan"
+                android:text="@string/entertainment"
                 android:textSize="12sp" />
 
             <Button
@@ -114,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Tempat Ibadah"
+                android:text="@string/science"
                 android:textSize="12sp" />
 
             <Button
@@ -124,10 +125,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="Taman Hiburan"
+                android:text="@string/technology"
                 android:textSize="12sp" />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/container_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:dividerInsetStart="16dp"
+        app:dividerInsetEnd="16dp"/>
 
     <TextView
         android:id="@+id/title_searchh_destination"
@@ -135,10 +146,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
         android:text="Populer Destination"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_btn" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
 
     <androidx.recyclerview.widget.RecyclerView
