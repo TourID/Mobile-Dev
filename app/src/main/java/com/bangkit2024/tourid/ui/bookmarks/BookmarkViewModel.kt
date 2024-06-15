@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit2024.tourid.Event
-import com.bangkit2024.tourid.data.local.entity.EntityTour
+import com.bangkit2024.tourid.data.local.entity.EntityTourism
 import com.bangkit2024.tourid.repository.TourRepository
 import kotlinx.coroutines.launch
 
@@ -16,18 +16,18 @@ class BookmarkViewModel(private val repo: TourRepository) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-    fun getBookmarkedNews() = repo.getBookmarkedNews()
+    fun getBookmarkedTour() = repo.getBookmarkedTourism()
 
-    fun saveNews(news: EntityTour) {
+    fun saveTour(tour: EntityTourism) {
         viewModelScope.launch {
-            repo.setNewsBookmark(news, true)
+            repo.setTourBookmark(tour, true)
         }
         showToast("Get Bookmark")
     }
 
-    fun deleteNews(news: EntityTour) {
+    fun deleteTour(tour: EntityTourism) {
         viewModelScope.launch {
-            repo.setNewsBookmark(news, false)
+            repo.setTourBookmark(tour, false)
         }
         showToast("Delete Bookmark")
     }

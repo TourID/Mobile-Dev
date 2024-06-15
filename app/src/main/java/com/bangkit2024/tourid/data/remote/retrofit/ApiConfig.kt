@@ -1,7 +1,6 @@
 package com.bangkit2024.tourid.data.remote.retrofit
 
 import com.bangkit2024.tourid.BuildConfig.API_KEY
-import com.bangkit2024.tourid.BuildConfig.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -26,7 +25,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl("https://tourid-api-symqq5pxfq-as.a.run.app/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp)
                 .build()

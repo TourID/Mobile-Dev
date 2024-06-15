@@ -3,7 +3,6 @@ package com.bangkit2024.tourid.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -41,50 +40,36 @@ class LoginActivity : AppCompatActivity() {
             signIn()
         }
 
-        binding.btnAnonymous.setOnClickListener {
-            guestSignIn()
+        binding.btnNextToHome.setOnClickListener {
+            notSignIn()
         }
     }
 
-    private fun guestSignIn() {
-        auth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInAnonymously:success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInAnonymously:failure", task.exception)
-                    Toast.makeText(
-                        baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                    updateUI(null)
-                }
-            }
+    private fun notSignIn() {
+        val intentHome = Intent(this, MainActivity::class.java)
+        intentHome.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intentHome)
+        finish()
     }
 
     private fun signIn() {
-        val credentialManager = CredentialManager.create(this) //import from androidx.CredentialManager
+        val credentialManager = CredentialManager.create(this)
         val googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
             .setServerClientId(getString(R.string.default_web_client_id))
             .build()
-        val request = GetCredentialRequest.Builder() //import from androidx.CredentialManager
+        val request = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
 
         lifecycleScope.launch {
             try {
-                val result: GetCredentialResponse = credentialManager.getCredential( //import from androidx.CredentialManager
+                val result: GetCredentialResponse = credentialManager.getCredential(
                     request = request,
                     context = this@LoginActivity,
                 )
                 handleSignIn(result)
-            } catch (e: GetCredentialException) { //import from androidx.CredentialManager
+            } catch (e: GetCredentialException) {
                 Log.d("Error GetCredebtial Response", e.message.toString())
             }
         }
@@ -103,12 +88,10 @@ class LoginActivity : AppCompatActivity() {
                         Log.e(TAG, "Received an invalid google id token response", e)
                     }
                 } else {
-                    // Catch any unrecognized custom credential type here.
                     Log.e(TAG, "Unexpected type of credential")
                 }
             }
             else -> {
-                // Catch any unrecognized credential type here.
                 Log.e(TAG, "Unexpected type of credential")
             }
         }

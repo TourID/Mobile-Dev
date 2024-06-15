@@ -4,60 +4,126 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
-import com.bangkit2024.tourid.BuildConfig
-import com.bangkit2024.tourid.data.local.entity.EntityTour
-import com.bangkit2024.tourid.data.local.room.DaoTour
+import com.bangkit2024.tourid.data.local.entity.EntityTourism
+import com.bangkit2024.tourid.data.local.room.DaoTourism
 import com.bangkit2024.tourid.data.remote.retrofit.ApiService
+
+//class TourRepository private constructor(
+//    private val apiService: ApiService,
+//    private val newsDao: DaoTour
+//) {
+//
+//    fun getHeadlineNews(category: String): LiveData<Result<List<EntityTour>>> = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val response = apiService.listNews(category, BuildConfig.API_KEY)
+//            val articles = response.articles
+//            val newsList = articles.map { article ->
+//                val isBookmarked = newsDao.isNewsBookmarked(article.title)
+//                EntityTour(
+//                    article.title,
+//                    article.publishedAt,
+//                    article.urlToImage,
+//                    article.url,
+//                    isBookmarked
+//                )
+//            }
+//            newsDao.deleteAll()
+//            newsDao.insertNews(newsList)
+//        } catch (e: Exception) {
+//            Log.d("NewsRepository", "getHeadlineNews: ${e.message.toString()} ")
+//            emit(Result.Error(e.message.toString()))
+//        }
+//        val localData: LiveData<Result<List<EntityTour>>> = newsDao.getNews().map { Result.Success(it) }
+//        emitSource(localData)
+//    }
+//
+//    fun getHeadlineNewsHome(): LiveData<Result<List<EntityTour>>> = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val response = apiService.listNewsHome(BuildConfig.API_KEY)
+//            val articles = response.articles
+//            val newsList = articles.map { article ->
+//                val isBookmarked = newsDao.isNewsBookmarked(article.title)
+//                EntityTour(
+//                    article.title,
+//                    article.publishedAt,
+//                    article.urlToImage,
+//                    article.url,
+//                    isBookmarked
+//                )
+//            }
+//            newsDao.deleteAll()
+//            newsDao.insertNews(newsList)
+//        } catch (e: Exception) {
+//            Log.d("NewsRepository", "getHeadlineNews: ${e.message.toString()} ")
+//            emit(Result.Error(e.message.toString()))
+//        }
+//        val localData: LiveData<Result<List<EntityTour>>> = newsDao.getNews().map { Result.Success(it) }
+//        emitSource(localData)
+//    }
+//
+//    fun getBookmarkedNews(): LiveData<List<EntityTour>> {
+//        return newsDao.getBookmarkedNews()
+//    }
+//
+//    suspend fun setNewsBookmark(news: EntityTour, bookmarkState: Boolean) {
+//        news.isBookmarked = bookmarkState
+//        newsDao.updateNews(news)
+//    }
+//
+//    companion object {
+//        @Volatile
+//        private var instance: TourRepository? = null
+//        fun getInstance(
+//            apiService: ApiService,
+//            newsDao: DaoTour
+//        ): TourRepository =
+//            instance ?: synchronized(this) {
+//                instance ?: TourRepository(apiService, newsDao)
+//            }.also { instance = it }
+//    }
+//}
+
 
 class TourRepository private constructor(
     private val apiService: ApiService,
-    private val newsDao: DaoTour
+    private val tourDao: DaoTourism
 ) {
-
-//    suspend fun getUserList(): List<GithubUsersResponseItem> {
-//        return withContext(Dispatchers.IO) {
-//            val response = apiService.userList()
-//            response
-//        }
-//    }
-//
-//    suspend fun searchUser(query: String): List<GithubUsersResponseItem> {
-//        val response = apiService.searchUser(query)
-//        return response.items
-//    }
-
-    fun getHeadlineNews(): LiveData<Result<List<EntityTour>>> = liveData {
+    fun getListTour(): LiveData<Result<List<EntityTourism>>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.listNews(BuildConfig.API_KEY)
-            val articles = response.articles
-            val newsList = articles.map { article ->
-                val isBookmarked = newsDao.isNewsBookmarked(article.title)
-                EntityTour(
-                    article.title,
-                    article.publishedAt,
-                    article.urlToImage,
-                    article.url,
+            val response = apiService.listTour()
+            val destinations = response
+            val tourList = destinations.map { destination ->
+                val isBookmarked = tourDao.isNewsTourism(destination.placeName)
+                EntityTourism(
+                    destination.placeId,
+                    destination.category,
+                    destination.imageURL,
+                    destination.placeName,
+                    destination.rating,
+                    destination.city,
                     isBookmarked
                 )
             }
-            newsDao.deleteAll()
-            newsDao.insertNews(newsList)
+            tourDao.deleteAll()
+            tourDao.insertTourism(tourList)
         } catch (e: Exception) {
             Log.d("NewsRepository", "getHeadlineNews: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EntityTour>>> = newsDao.getNews().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EntityTourism>>> = tourDao.getTourism().map { Result.Success(it) }
         emitSource(localData)
     }
 
-    fun getBookmarkedNews(): LiveData<List<EntityTour>> {
-        return newsDao.getBookmarkedNews()
+    fun getBookmarkedTourism(): LiveData<List<EntityTourism>> {
+        return tourDao.getBookmarkedTourism()
     }
 
-    suspend fun setNewsBookmark(news: EntityTour, bookmarkState: Boolean) {
+    suspend fun setTourBookmark(news: EntityTourism, bookmarkState: Boolean) {
         news.isBookmarked = bookmarkState
-        newsDao.updateNews(news)
+        tourDao.updateTourism(news)
     }
 
     companion object {
@@ -65,10 +131,10 @@ class TourRepository private constructor(
         private var instance: TourRepository? = null
         fun getInstance(
             apiService: ApiService,
-            newsDao: DaoTour
+            tourDao: DaoTourism
         ): TourRepository =
             instance ?: synchronized(this) {
-                instance ?: TourRepository(apiService, newsDao)
+                instance ?: TourRepository(apiService, tourDao)
             }.also { instance = it }
     }
 }
