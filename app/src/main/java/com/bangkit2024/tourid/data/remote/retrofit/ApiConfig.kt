@@ -1,8 +1,9 @@
 package com.bangkit2024.tourid.data.remote.retrofit
 
-import com.bangkit2024.tourid.BuildConfig.API_KEY
-import okhttp3.Interceptor
+import com.bangkit2024.tourid.BuildConfig
+import com.bangkit2024.tourid.BuildConfig.BASE_URL
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -12,20 +13,18 @@ class ApiConfig {
 
         fun getApiService(): ApiService {
 
-            val authInterceptor = Interceptor { chain ->
-                val req = chain.request()
-                val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "token $API_KEY")
-                    .build()
-                chain.proceed(requestHeaders)
+            val loggingInterceptor = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
             }
 
             val okhttp = OkHttpClient.Builder()
-                .addInterceptor(authInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://tourid-api-symqq5pxfq-as.a.run.app/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp)
                 .build()

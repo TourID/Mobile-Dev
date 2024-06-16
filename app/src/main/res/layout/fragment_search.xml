@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/general"
+                android:text="@string/All"
                 android:textSize="12sp" />
 
             <Button
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/health"
+                android:text="@string/Bahari"
                 android:textSize="12sp" />
 
             <Button
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/business"
+                android:text="@string/Budaya"
                 android:textSize="12sp" />
 
             <Button
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/sports"
+                android:text="@string/Cagara"
                 android:textSize="12sp" />
 
             <Button
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/entertainment"
+                android:text="@string/perbelanjaan"
                 android:textSize="12sp" />
 
             <Button
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/science"
+                android:text="@string/ibadah"
                 android:textSize="12sp" />
 
             <Button
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/technology"
+                android:text="@string/hiburan"
                 android:textSize="12sp" />
         </LinearLayout>
     </HorizontalScrollView>
