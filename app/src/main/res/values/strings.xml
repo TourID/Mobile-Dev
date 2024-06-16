@@ -22,4 +22,7 @@
     <string name="hiburan">Taman Hiburan</string>
     <string name="ibadah">Ibadah</string>
     <string name="Lewati"><u>Lewati</u></string>
+    <string name="next">Next</string>
+    <string name="start">Start</string>
+    <string name="skip">Skip</string>
 </resources>
