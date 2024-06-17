@@ -70,7 +70,7 @@
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/your_map_image" />
+            tools:src="@tools:sample/avatars" />
 
         <!-- Post Review Section -->
         <TextView
