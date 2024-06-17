@@ -1,10 +1,11 @@
-package com.bangkit2024.tourid
+package com.bangkit2024.tourid.ui
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bangkit2024.tourid.R
 import com.bangkit2024.tourid.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

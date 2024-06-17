@@ -10,7 +10,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.lifecycleScope
-import com.bangkit2024.tourid.MainActivity
+import com.bangkit2024.tourid.ui.MainActivity
 import com.bangkit2024.tourid.R
 import com.bangkit2024.tourid.databinding.ActivityLoginBinding
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption

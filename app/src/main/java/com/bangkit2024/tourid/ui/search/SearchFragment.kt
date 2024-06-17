@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,9 +38,11 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchAdapter = AdapterItem { user ->
-            if (user.isBookmarked) searchVM.deleteTour(user) else searchVM.saveTour(user)
-        }
+//        searchAdapter = AdapterItem { user ->
+//            if (user.isBookmarked) searchVM.deleteTour(user) else searchVM.saveTour(user)
+//        }
+
+        searchAdapter = AdapterItem()
 
         binding?.rvSearch?.apply {
             layoutManager = LinearLayoutManager(context)
@@ -50,6 +53,34 @@ class SearchFragment : Fragment() {
         searchVM.isLoading.observe(viewLifecycleOwner) { loading ->
             showLoading(loading)
         }
+
+        searchVM.toastText.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { toastMsg ->
+                Toast.makeText(requireContext(), toastMsg, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        searchVM.searchResult.observe(viewLifecycleOwner) { search ->
+            if (!search.isNullOrEmpty()) {
+                searchAdapter.submitList(search)
+            } else {
+                searchAdapter.submitList(emptyList())
+            }
+        }
+
+        binding?.searchFeature?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    searchVM.getSearchResult(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
 
         val buttons = listOf(
             binding?.btnCategoryAll,
@@ -81,9 +112,9 @@ class SearchFragment : Fragment() {
                     )
                 )
 
-                val category = btns.text.toString().lowercase()
+                val category = btns.text.toString()
 
-                searchVM.getTourism().observe(viewLifecycleOwner) { result ->
+                searchVM.getTourism(category).observe(viewLifecycleOwner) { result ->
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {
@@ -103,7 +134,7 @@ class SearchFragment : Fragment() {
                                     "Terjadi Kesalahan" + result.error,
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                Log.e("HomeFragment", "{${result.error}}")
+                                Log.e("SearchFragment", "{${result.error}}")
                             }
                         }
                     }

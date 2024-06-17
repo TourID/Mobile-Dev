@@ -1,4 +1,4 @@
-package com.bangkit2024.tourid
+package com.bangkit2024.tourid.utils
 
 class Event<out T>(private val content: T) {
     @Suppress("MemberVisibilityCanBePrivate")

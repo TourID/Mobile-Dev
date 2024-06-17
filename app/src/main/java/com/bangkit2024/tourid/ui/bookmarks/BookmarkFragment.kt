@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit2024.tourid.adapter.AdapterItem
 import com.bangkit2024.tourid.databinding.FragmentBookmarkBinding
 import com.bangkit2024.tourid.di.InjectionTourism
@@ -33,24 +32,24 @@ class BookmarkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bookmarkAdapter = AdapterItem { user ->
-            if (user.isBookmarked) bookmarkVM.deleteTour(user) else bookmarkVM.saveTour(user)
-        }
-
-        binding?.rvSearch?.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = bookmarkAdapter
-        }
-
-        bookmarkVM.isLoading.observe(viewLifecycleOwner) { loading ->
-            showLoading(loading)
-        }
-
-        bookmarkVM.getBookmarkedTour().observe(viewLifecycleOwner) { bookmark ->
-            binding?.pbBookmark?.visibility = View.GONE
-            bookmarkAdapter.submitList(bookmark)
-        }
+//        bookmarkAdapter = AdapterItem { user ->
+//            if (user.isBookmarked) bookmarkVM.deleteTour(user) else bookmarkVM.saveTour(user)
+//        }
+//
+//        binding?.rvSearch?.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            setHasFixedSize(true)
+//            adapter = bookmarkAdapter
+//        }
+//
+//        bookmarkVM.isLoading.observe(viewLifecycleOwner) { loading ->
+//            showLoading(loading)
+//        }
+//
+//        bookmarkVM.getBookmarkedTour().observe(viewLifecycleOwner) { bookmark ->
+//            binding?.pbBookmark?.visibility = View.GONE
+//            bookmarkAdapter.submitList(bookmark)
+//        }
     }
 
     private fun showLoading(isLoading: Boolean) {

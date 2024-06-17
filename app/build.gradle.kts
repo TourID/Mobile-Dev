@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.kotlin.parcelize)
     id("com.google.devtools.ksp")
 }
 
@@ -34,13 +35,17 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
+
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -74,6 +79,9 @@ dependencies {
 
     implementation(libs.github.glide)
     implementation(libs.circleimageview)
+    implementation(libs.refresh.layout.kernel)
+    implementation(libs.refresh.header.material)
+    implementation(libs.refresh.footer.ball)
     implementation(libs.androidx.activity.ktx)
 
     implementation(libs.retrofit)
@@ -83,5 +91,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.room.paging)
 
 }

@@ -13,7 +13,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
-import com.bangkit2024.tourid.MainActivity
 import com.bangkit2024.tourid.R
 import com.bangkit2024.tourid.adapter.SliderAdapter
 import com.bangkit2024.tourid.ui.login.LoginActivity
