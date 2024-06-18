@@ -1,7 +1,11 @@
 package com.bangkit2024.tourid.data.remote.retrofit
 
+import com.bangkit2024.tourid.data.remote.response.DetailResponse
+import com.bangkit2024.tourid.data.remote.response.ReviewsItem
 import com.bangkit2024.tourid.data.remote.response.TourResponseItem
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -20,4 +24,11 @@ interface ApiService {
         @Query("q") q: String
     ): List<TourResponseItem>
 
+    @GET("detail-tourism/{placeId}")
+    suspend fun detailItem(
+        @Path("placeId") placeId: Int
+    ): DetailResponse
+
+    @POST("addReview")
+    suspend fun addReview(@Body reviewItem: ReviewsItem)
 }

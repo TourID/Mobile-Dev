@@ -4,6 +4,7 @@ agp = "8.3.0"
 circleimageview = "3.1.0"
 firebaseFirestore = "25.0.0"
 fragmentKtx = "1.7.1"
+glideTransformations = "4.3.0"
 glideVersion = "4.16.0"
 kotlin = "1.9.22"
 coreKtx = "1.13.1"
@@ -30,6 +31,8 @@ pagingRuntimeKtx = "3.1.0"
 refreshLayoutKernel = "2.1.0"
 roomPaging = "2.4.0-rc01"
 kotlinParcelize = "1.9.0"
+googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
+playServicesMaps = "18.2.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -38,6 +41,7 @@ androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 github-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
+glide-transformations = { module = "jp.wasabeef:glide-transformations", version.ref = "glideTransformations" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -65,10 +69,12 @@ refresh-footer-ball = { module = "io.github.scwang90:refresh-footer-ball", versi
 refresh-header-material = { module = "io.github.scwang90:refresh-header-material", version.ref = "refreshLayoutKernel" }
 refresh-layout-kernel = { module = "io.github.scwang90:refresh-layout-kernel", version.ref = "refreshLayoutKernel" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinParcelize"}
+googleAndroidLibrariesMapsplatformSecretsGradlePlugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "googleAndroidLibrariesMapsplatformSecretsGradlePlugin" }
 

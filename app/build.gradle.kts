@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
     id("com.google.devtools.ksp")
 }
 
@@ -72,12 +73,14 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
+    implementation(libs.play.services.maps)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.github.glide)
+    implementation(libs.glide.transformations)
     implementation(libs.circleimageview)
     implementation(libs.refresh.layout.kernel)
     implementation(libs.refresh.header.material)
