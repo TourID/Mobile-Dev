@@ -26,5 +26,10 @@
     <string name="start">Start</string>
     <string name="skip">Skip</string>
     <string name="retry">Try Again</string>
+    <string name="weather_icon">Icon Weather</string>
+    <string name="weather_description">Desc Weather</string>
+    <string name="temperature">%.1f°C</string>
+    <string name="min_temperature">Min: %.1f°C</string>
+    <string name="max_temperature">Max: %.1f°C</string>
     <string name="dummy_description">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 </resources>
