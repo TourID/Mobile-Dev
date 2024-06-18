@@ -1,13 +1,14 @@
 package com.bangkit2024.tourid.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit2024.tourid.Event
-import com.bangkit2024.tourid.data.local.entity.EntityTourism
-import com.bangkit2024.tourid.data.remote.response.GithubUsersResponseItem
+import com.bangkit2024.tourid.data.remote.response.TourResponseItem
+import com.bangkit2024.tourid.data.remote.response.WeatherResponse
 import com.bangkit2024.tourid.repository.TourRepository
+import com.bangkit2024.tourid.utils.Event
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repo: TourRepository) : ViewModel() {
@@ -18,35 +19,37 @@ class HomeViewModel(private val repo: TourRepository) : ViewModel() {
     private val _toastText = MutableLiveData<Event<String>>()
     val toastText: LiveData<Event<String>> = _toastText
 
-    private val _resultSearch = MutableLiveData<List<GithubUsersResponseItem>>()
-    val resultUser: LiveData<List<GithubUsersResponseItem>> = _resultSearch
+    private val _homeTourList = MutableLiveData<List<TourResponseItem>>()
+    val homeTourList: LiveData<List<TourResponseItem>> = _homeTourList
 
-//    fun getHeadlineNewsHome() = repo.getHeadlineNewsHome()
-//
-//    fun saveNews(news: EntityTour) {
-//        viewModelScope.launch {
-//            repo.setNewsBookmark(news, true)
-//        }
+    private val _weather = MutableLiveData<WeatherResponse>()
+    val weather: LiveData<WeatherResponse> get() = _weather
+
+//    fun saveTour(tour: EntityTourism) = viewModelScope.launch {
+//        repo.setTourBookmark(tour, true)
 //        showToast("Get Bookmark")
 //    }
 //
-//    fun deleteNews(news: EntityTour) {
-//        viewModelScope.launch {
-//            repo.setNewsBookmark(news, false)
-//        }
+//    fun deleteTour(tour: EntityTourism) = viewModelScope.launch {
+//        repo.setTourBookmark(tour, false)
 //        showToast("Delete Bookmark")
 //    }
 
-    fun getTourism() = repo.getListTour()
-
-    fun saveTour(tour: EntityTourism) = viewModelScope.launch {
-        repo.setTourBookmark(tour, true)
-        showToast("Get Bookmark")
+    fun fetchWeatherByCoordinates(lat: Double, lon: Double) {
+        repo.getWeatherByCoordinates(lat, lon) { weatherResponse ->
+            _weather.postValue(weatherResponse!!)
+        }
     }
 
-    fun deleteTour(tour: EntityTourism) = viewModelScope.launch {
-        repo.setTourBookmark(tour, false)
-        showToast("Delete Bookmark")
+    fun showHomeList() = viewModelScope.launch {
+        _isLoading.value = true
+        try {
+            _homeTourList.value = repo.getHomeList()
+        } catch (e: Exception) {
+            Log.d("HomeViewModel", "Load Error : ${e.message}")
+            showToast("Gagal menampilkan daftar list : ${e.message}")
+        }
+        _isLoading.value = false
     }
 
     private fun showToast(msg: String) {

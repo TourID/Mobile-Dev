@@ -10,7 +10,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.lifecycleScope
-import com.bangkit2024.tourid.MainActivity
+import com.bangkit2024.tourid.ui.MainActivity
 import com.bangkit2024.tourid.R
 import com.bangkit2024.tourid.databinding.ActivityLoginBinding
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -22,7 +22,13 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
@@ -70,17 +76,15 @@ class LoginActivity : AppCompatActivity() {
                 )
                 handleSignIn(result)
             } catch (e: GetCredentialException) {
-                Log.d("Error GetCredebtial Response", e.message.toString())
+                Log.d("Error GetCredential Response", e.message.toString())
             }
         }
     }
 
     private fun handleSignIn(result: GetCredentialResponse) {
-        // Handle the successfully returned credential.
         when (val credential = result.credential) {
             is CustomCredential -> {
                 if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                    // Process Login dengan Firebase Auth
                     try {
                         val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                         firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
@@ -104,12 +108,45 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
                     val user: FirebaseUser? = auth.currentUser
-                    updateUI(user)
+                    user?.let {
+                        sendUserDataToServer(it.uid, it.email)
+                        updateUI(it)
+                    }
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     updateUI(null)
                 }
             }
+    }
+
+    private fun sendUserDataToServer(uid: String, email: String?) {
+        email?.let {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val client = OkHttpClient()
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val json = JSONObject().apply {
+                    put("userId", uid)
+                    put("email", email)
+                }
+                val body = RequestBody.create(JSON, json.toString())
+
+                val request = Request.Builder()
+                    .url("https://tourid-api-symqq5pxfq-as.a.run.app/add-user")
+                    .post(body)
+                    .build()
+
+                try {
+                    val response = client.newCall(request).execute()
+                    if (!response.isSuccessful) {
+                        Log.e(TAG, "Unexpected code $response")
+                    } else {
+                        Log.d(TAG, "Response: ${response.body?.string()}")
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Network request failed", e)
+                }
+            }
+        }
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {

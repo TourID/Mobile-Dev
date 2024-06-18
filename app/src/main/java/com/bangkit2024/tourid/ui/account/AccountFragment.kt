@@ -54,6 +54,7 @@ class AccountFragment : Fragment() {
             val email = firebaseUser.email
             val username = firebaseUser.displayName
             val photo = firebaseUser.photoUrl
+            val uid = firebaseUser.uid
 
             binding?.signInButtonAccount?.visibility = View.GONE
             binding?.card?.visibility = View.VISIBLE

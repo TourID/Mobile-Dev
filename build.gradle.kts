@@ -4,4 +4,6 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     alias(libs.plugins.google.gms.google.services) apply false
     id("com.google.devtools.ksp") version "1.9.22-1.0.17" apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin) apply false
 }

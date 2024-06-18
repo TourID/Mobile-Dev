@@ -1,36 +1,66 @@
 package com.bangkit2024.tourid.data.remote.retrofit
 
-import com.bangkit2024.tourid.BuildConfig.API_KEY
-import okhttp3.Interceptor
+import com.bangkit2024.tourid.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiConfig {
 
     companion object {
 
-        fun getApiService(): ApiService {
+        // Retrofit instance for BASE_URL_TOUR
+        private var retrofitTour: Retrofit? = null
 
-            val authInterceptor = Interceptor { chain ->
-                val req = chain.request()
-                val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "token $API_KEY")
+        // Retrofit instance for BASE_URL_WEATHER
+        private var retrofitWeather: Retrofit? = null
+
+        fun getApiServiceTour(): ApiService {
+            if (retrofitTour == null) {
+                val loggingInterceptor = HttpLoggingInterceptor().apply {
+                    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                }
+
+                val okhttp = OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
                     .build()
-                chain.proceed(requestHeaders)
+
+                retrofitTour = Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okhttp)
+                    .build()
             }
 
-            val okhttp = OkHttpClient.Builder()
-                .addInterceptor(authInterceptor)
-                .build()
+            return retrofitTour!!.create(ApiService::class.java)
+        }
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://tourid-api-symqq5pxfq-as.a.run.app/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp)
-                .build()
+        fun getApiServiceWeather(): ApiWeatherService {
+            if (retrofitWeather == null) {
+                val loggingInterceptor = HttpLoggingInterceptor().apply {
+                    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                }
 
-            return retrofit.create(ApiService::class.java)
+                val okhttp = OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .build()
+
+                retrofitWeather = Retrofit.Builder()
+                    .baseUrl(BuildConfig.WEATHER_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okhttp)
+                    .build()
+            }
+
+            return retrofitWeather!!.create(ApiWeatherService::class.java)
         }
     }
 }
