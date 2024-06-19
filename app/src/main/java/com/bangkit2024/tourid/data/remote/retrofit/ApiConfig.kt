@@ -11,10 +11,8 @@ class ApiConfig {
 
     companion object {
 
-        // Retrofit instance for BASE_URL_TOUR
         private var retrofitTour: Retrofit? = null
 
-        // Retrofit instance for BASE_URL_WEATHER
         private var retrofitWeather: Retrofit? = null
 
         fun getApiServiceTour(): ApiService {
