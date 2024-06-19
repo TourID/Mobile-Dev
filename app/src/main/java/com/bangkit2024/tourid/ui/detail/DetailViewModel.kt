@@ -22,7 +22,7 @@ class DetailViewModel(private val repo: TourRepository) : ViewModel() {
     val toastText: LiveData<Event<String>> = _toastText
 
     private val _detail = MutableLiveData<DetailResponse>()
-    val detail: LiveData<DetailResponse> = _detail
+    val detail: LiveData<DetailResponse> get() = _detail
 
     private val _reviewAdded = MutableLiveData<Boolean>()
     val reviewAdded: LiveData<Boolean> = _reviewAdded
@@ -59,6 +59,7 @@ class DetailViewModel(private val repo: TourRepository) : ViewModel() {
             }
         }
     }
+
 
     private fun showToast(msg: String){
         _toastText.value = Event(msg)

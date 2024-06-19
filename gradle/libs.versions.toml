@@ -5,7 +5,6 @@ androidAsyncHttp = "1.4.10"
 circleimageview = "3.1.0"
 firebaseFirestore = "25.0.0"
 fragmentKtx = "1.7.1"
-glideTransformations = "4.3.0"
 glideVersion = "4.16.0"
 kotlin = "1.9.22"
 coreKtx = "1.13.1"
@@ -47,7 +46,6 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 github-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
-glide-transformations = { module = "jp.wasabeef:glide-transformations", version.ref = "glideTransformations" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

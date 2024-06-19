@@ -16,7 +16,7 @@
             android:background="@drawable/round_corner">
 
             <ImageView
-                android:id="@+id/image_view"
+                android:id="@+id/iv_detail"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
                 android:scaleType="centerCrop"
@@ -165,7 +165,6 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_title"
-                android:text="@string/dummy_description"
                 android:textSize="16sp" />
 
             <TextView
