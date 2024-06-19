@@ -80,7 +80,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.github.glide)
-    implementation(libs.glide.transformations)
     implementation(libs.circleimageview)
     implementation(libs.refresh.layout.kernel)
     implementation(libs.refresh.header.material)

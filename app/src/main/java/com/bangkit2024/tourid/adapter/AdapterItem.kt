@@ -56,7 +56,7 @@ class AdapterItem : ListAdapter<TourResponseItem, AdapterItem.MyViewHolder>(DIFF
     }
 
     companion object {
-        private const val KEY_DETAIL = "key_detail"
+        const val KEY_DETAIL = "key_detail"
 
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TourResponseItem>() {
             override fun areItemsTheSame(oldItem: TourResponseItem, newItem: TourResponseItem): Boolean {

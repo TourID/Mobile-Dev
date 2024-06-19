@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit2024.tourid.repository.TourRepository
 import com.bangkit2024.tourid.ui.bookmarks.BookmarkViewModel
+import com.bangkit2024.tourid.ui.detail.DetailViewModel
 import com.bangkit2024.tourid.ui.home.HomeViewModel
 import com.bangkit2024.tourid.ui.search.SearchViewModel
 
@@ -16,6 +17,7 @@ class ViewModelFactory(private val repository: TourRepository) : ViewModelProvid
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(repository) as T
             modelClass.isAssignableFrom(BookmarkViewModel::class.java) -> BookmarkViewModel(repository) as T
 //            modelClass.isAssignableFrom(AccountViewModel::class.java) -> AccountViewModel(repository) as T
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> DetailViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

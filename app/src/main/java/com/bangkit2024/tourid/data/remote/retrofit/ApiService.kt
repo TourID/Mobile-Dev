@@ -29,6 +29,6 @@ interface ApiService {
         @Path("placeId") placeId: Int
     ): DetailResponse
 
-    @POST("addReview")
+    @POST("add-review")
     suspend fun addReview(@Body reviewItem: ReviewsItem)
 }
