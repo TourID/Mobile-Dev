@@ -15,30 +15,29 @@ import com.bangkit2024.tourid.databinding.FragmentHomeBinding
 import com.bangkit2024.tourid.di.InjectionTourism
 import com.bumptech.glide.Glide
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
+    private val binding get() = _binding
     private lateinit var homeAdapter: AdapterItem
     private val homeVM by viewModels<HomeViewModel> {
         InjectionTourism.provideViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inisialisasi RecyclerView dan Adapter
         homeAdapter = AdapterItem()
-        binding.rvHome.apply {
+        binding?.rvHome?.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = homeAdapter
@@ -62,10 +61,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         homeVM.weather.observe(viewLifecycleOwner) { weatherResponse ->
             updateUI(weatherResponse)
         }
+
+        homeVM.showHomeList()
+
+        homeVM.homeTourList.observe(viewLifecycleOwner) { response ->
+            homeAdapter.submitList(response)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.pbHome.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.pbHome?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String) {
@@ -73,7 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun updateUI(weatherResponse: WeatherResponse) {
-        binding.apply {
+        binding?.apply {
             tvCity.text = weatherResponse.name
 
             val tempInCelsius = weatherResponse.main?.temp?.minus(273.15)

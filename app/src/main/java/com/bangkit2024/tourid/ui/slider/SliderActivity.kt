@@ -2,7 +2,6 @@ package com.bangkit2024.tourid.ui.slider
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -36,14 +35,12 @@ class SliderActivity : AppCompatActivity() {
 
         statusBarTransparent()
 
-        // Initialize the slider layouts
         layouts = intArrayOf(
-            R.layout.slide_1,  // Replace with actual layout resource IDs
+            R.layout.slide_1,
             R.layout.slide_2,
             R.layout.slide_3
         )
 
-        // Setup the SliderAdapter
         sliderAdapter = SliderAdapter(layouts, this)
         sliderPager = findViewById(R.id.slider_pager)
         sliderPager.adapter = sliderAdapter
@@ -52,7 +49,6 @@ class SliderActivity : AppCompatActivity() {
         btnSkip = findViewById(R.id.btn_skip)
         dotsLayout = findViewById(R.id.dotsLayout)
 
-        // Set up the button to skip to LoginActivity
         btnSkip.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -64,7 +60,6 @@ class SliderActivity : AppCompatActivity() {
             if (currentItem < layouts.size - 1) {
                 sliderPager.currentItem = currentItem + 1
             } else {
-                // Last slide, start LoginActivity
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -75,7 +70,6 @@ class SliderActivity : AppCompatActivity() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
-            //btn gone after slide 2
             override fun onPageSelected(position: Int) {
                 if (position == layouts.size - 1) {
                     btnSkip.visibility = View.GONE
@@ -90,7 +84,7 @@ class SliderActivity : AppCompatActivity() {
             }
         })
 
-        addDotsIndicator(0) // Initialize dots
+        addDotsIndicator(0)
     }
 
     private fun addDotsIndicator(position: Int) {
@@ -112,10 +106,8 @@ class SliderActivity : AppCompatActivity() {
     }
 
     private fun statusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
-        }
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
     }
 }
