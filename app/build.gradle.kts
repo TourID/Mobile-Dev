@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -94,8 +95,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.room.paging)
 
     implementation(libs.androidx.work.runtime)
     implementation(libs.android.async.http)

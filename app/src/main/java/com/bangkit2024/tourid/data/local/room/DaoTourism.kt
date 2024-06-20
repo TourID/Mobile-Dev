@@ -1,6 +1,5 @@
 package com.bangkit2024.tourid.data.local.room
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy

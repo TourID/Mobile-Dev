@@ -18,18 +18,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="true">
 
-        <TextView
-            android:id="@+id/title_home"
-            style="@style/TextAppearance.AppCompat.Title"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="26dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="2dp"
-            android:text="Home"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/title_home"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Home"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_refresh_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_refresh_page"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -78,11 +95,11 @@
                 android:id="@+id/tv_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
                 android:text="@string/temp"
                 android:textAlignment="center"
-                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintStart_toEndOf="@+id/weatherIconImageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -136,14 +153,13 @@
         android:id="@+id/tv_title_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Destination"
-        android:textSize="20sp"
+        android:layout_margin="18dp"
+        android:text="Destination Recommendations"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card"
-        tools:text="Destination" />
+        app:layout_constraintTop_toBottomOf="@id/card" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_home"
@@ -153,7 +169,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_row_destination" />
+        tools:listitem="@layout/item_recommendation" />
 
     <ProgressBar
         android:id="@+id/pb_home"

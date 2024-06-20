@@ -32,7 +32,7 @@ class DetailViewModel(private val repo: TourRepository) : ViewModel() {
         try {
             _detail.value = repo.fetchDetailItem(id)
         } catch (e: Exception) {
-            showToast("Cant fetch detail : ${e.message}")
+            showToast("Can't fetch detail: ${e.message}")
         }
         _isLoading.value = false
     }
@@ -41,6 +41,11 @@ class DetailViewModel(private val repo: TourRepository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                if (userId.isEmpty()) {
+                    showToast("User ID not available. Cannot add review.")
+                    return@launch
+                }
+
                 val username = FirebaseAuth.getInstance().currentUser?.displayName ?: ""
 
                 val reviewItem = ReviewsItem(
@@ -54,14 +59,13 @@ class DetailViewModel(private val repo: TourRepository) : ViewModel() {
                 repo.addReview(reviewItem)
                 _reviewAdded.value = true
             } catch (e: Exception) {
-                Log.e("Detail View Model", "Failed to add review", e)
+                Log.e("DetailViewModel", "Failed to add review", e)
                 _reviewAdded.value = false
             }
         }
     }
 
-
-    private fun showToast(msg: String){
+    private fun showToast(msg: String) {
         _toastText.value = Event(msg)
     }
 }
