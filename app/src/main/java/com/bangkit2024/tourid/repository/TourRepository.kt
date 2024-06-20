@@ -17,13 +17,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 
 class TourRepository(
     private val apiService: ApiService,
     private val apiWeather: ApiWeatherService
-//    private val tourDao: DaoTourism,
-//    private val db: DatabaseTourism
 ) {
 
     suspend fun fetchDetailItem(id: Int): DetailResponse {
@@ -42,6 +41,7 @@ class TourRepository(
             emit(Result.Error(e.message.toString()))
         }
     }
+
     fun getListTour(category: String): LiveData<Result<List<TourResponseItem>>> = liveData {
         emit(Result.Loading)
         try {
@@ -76,16 +76,38 @@ class TourRepository(
         }
     }
 
-    suspend fun getBookmarks(userId: String): List<TourResponseItem> {
-        return apiService.getBookmarkUser(userId)
+    suspend fun getBookmarks(userId: String): List<TourResponseItem>? {
+        return try {
+            if (userId.isNotEmpty()) {
+                apiService.getBookmarkUser(userId)
+            } else {
+                throw IllegalArgumentException("User ID cannot be empty")
+            }
+        } catch (e: HttpException) {
+            if (e.code() == 404) {
+                null
+            } else {
+                throw e
+            }
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     suspend fun addBookmark(requestBookmark: RequestBookmark) {
-        apiService.addBookmarkUser(requestBookmark)
+        if (requestBookmark.userId.isNotEmpty()) {
+            apiService.addBookmarkUser(requestBookmark)
+        } else {
+            throw IllegalArgumentException("User ID cannot be empty")
+        }
     }
 
     suspend fun deleteBookmark(requestBookmark: RequestBookmark) {
-        apiService.deleteBookmark(requestBookmark)
+        if (requestBookmark.userId.isNotEmpty()) {
+            apiService.deleteBookmark(requestBookmark)
+        } else {
+            throw IllegalArgumentException("User ID cannot be empty")
+        }
     }
 
     fun getWeatherByCoordinates(lat: Double, lon: Double, callback: (WeatherResponse?) -> Unit) {
@@ -111,8 +133,6 @@ class TourRepository(
         fun getInstance(
             apiService: ApiService,
             apiWeather: ApiWeatherService
-//            tourDao: DaoTourism,
-//            db: DatabaseTourism
         ): TourRepository =
             instance ?: synchronized(this) {
                 instance ?: TourRepository(apiService, apiWeather)

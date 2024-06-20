@@ -52,16 +52,6 @@ class HomeViewModel(private val repo: TourRepository) : ViewModel() {
         }
     }
 
-    //    fun saveTour(tour: EntityTourism) = viewModelScope.launch {
-//        repo.setTourBookmark(tour, true)
-//        showToast("Get Bookmark")
-//    }
-//
-//    fun deleteTour(tour: EntityTourism) = viewModelScope.launch {
-//        repo.setTourBookmark(tour, false)
-//        showToast("Delete Bookmark")
-//    }
-
     private fun showToast(msg: String) {
         _toastText.value = Event(msg)
     }

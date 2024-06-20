@@ -74,6 +74,11 @@ class HomeFragment : Fragment() {
             recommendationAdapter.submitList(recommendations)
         }
 
+        binding?.ivRefreshHome?.setOnClickListener {
+            getMyLocation()
+            homeVM.fetchRecommendations(userId)
+        }
+
         getMyLocation()
     }
 

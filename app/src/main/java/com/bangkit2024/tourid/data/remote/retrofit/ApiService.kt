@@ -6,9 +6,10 @@ import com.bangkit2024.tourid.data.remote.response.RequestBookmark
 import com.bangkit2024.tourid.data.remote.response.ReviewsItem
 import com.bangkit2024.tourid.data.remote.response.TourResponseItem
 import com.bangkit2024.tourid.data.remote.response.UserRequest
+import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -38,7 +39,7 @@ interface ApiService {
     @POST("recommend")
     suspend fun getRecommendations(@Body userRequest: UserRequest): List<Recommendation>
 
-    @GET("{userId}")
+    @GET("get-bookmark/{userId}")
     suspend fun getBookmarkUser(
         @Path("userId") userId: String
     ): List<TourResponseItem>
@@ -48,8 +49,6 @@ interface ApiService {
         @Body requestBookmark: RequestBookmark
     )
 
-    @DELETE("delete-bookmark")
-    suspend fun deleteBookmark(
-        @Body deleteRequest: RequestBookmark
-    )
+    @HTTP(method = "DELETE", path = "delete-bookmark", hasBody = true)
+    suspend fun deleteBookmark(@Body requestBookmark: RequestBookmark): Response<Unit>
 }

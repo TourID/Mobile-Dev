@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit2024.tourid.adapter.AdapterItem
+import com.bangkit2024.tourid.data.remote.response.TourResponseItem
 import com.bangkit2024.tourid.databinding.FragmentBookmarkBinding
 import com.bangkit2024.tourid.di.InjectionTourism
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class BookmarkFragment : Fragment() {
 
@@ -32,24 +37,51 @@ class BookmarkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        bookmarkAdapter = AdapterItem { user ->
-//            if (user.isBookmarked) bookmarkVM.deleteTour(user) else bookmarkVM.saveTour(user)
-//        }
-//
-//        binding?.rvSearch?.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            setHasFixedSize(true)
-//            adapter = bookmarkAdapter
-//        }
-//
-//        bookmarkVM.isLoading.observe(viewLifecycleOwner) { loading ->
-//            showLoading(loading)
-//        }
-//
-//        bookmarkVM.getBookmarkedTour().observe(viewLifecycleOwner) { bookmark ->
-//            binding?.pbBookmark?.visibility = View.GONE
-//            bookmarkAdapter.submitList(bookmark)
-//        }
+        val userId = Firebase.auth.currentUser?.uid ?: ""
+
+        bookmarkAdapter = AdapterItem()
+        binding?.apply {
+            rvBookmarks.layoutManager = LinearLayoutManager(context)
+            rvBookmarks.setHasFixedSize(true)
+            rvBookmarks.adapter = bookmarkAdapter
+        }
+
+        bookmarkVM.isLoading.observe(viewLifecycleOwner) { loading ->
+            showLoading(loading)
+        }
+
+        bookmarkVM.toastText.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        bookmarkVM.bookmarks.observe(viewLifecycleOwner) { bookmarks ->
+            val items = arrayListOf<TourResponseItem>()
+            bookmarks?.map {
+                val item = TourResponseItem(
+                    placeId = it.placeId,
+                    city = it.city,
+                    imageUrl = it.imageUrl,
+                    ratingLoc = it.ratingLoc,
+                    category = it.category,
+                    placeName = it.placeName
+                )
+                items.add(item)
+            }
+            bookmarkAdapter.submitList(items)
+            if (items.isEmpty()) {
+                binding?.ivErrorFavorite?.visibility = View.VISIBLE
+            } else {
+                binding?.ivErrorFavorite?.visibility = View.GONE
+            }
+        }
+
+        bookmarkVM.getBookmarks(userId)
+
+        binding?.ivRefreshBookmark?.setOnClickListener {
+            bookmarkVM.getBookmarks(userId)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
