@@ -1,6 +1,7 @@
 package com.bangkit2024.tourid.ui.detail
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -72,7 +73,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun observeViewModel() {
         detailVM.isLoading.observe(this) { isLoading ->
-            // Handle loading state
+            showLoading(isLoading)
         }
 
         detailVM.toastText.observe(this) { event ->
@@ -105,6 +106,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         detailVM.bookmarkAdded.observe(this) { bookmarkAdded ->
             if (bookmarkAdded) {
                 Toast.makeText(this, "Bookmark added successfully", Toast.LENGTH_SHORT).show()
+                detailBinding.btnBookmark.setImageResource(R.drawable.ic_bookmark_filled) // Update to filled bookmark icon
             } else {
                 Toast.makeText(this, "Failed to add bookmark", Toast.LENGTH_SHORT).show()
             }
@@ -113,6 +115,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         detailVM.bookmarkRemoved.observe(this) { bookmarkRemoved ->
             if (bookmarkRemoved) {
                 Toast.makeText(this, "Bookmark removed successfully", Toast.LENGTH_SHORT).show()
+                detailBinding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border) // Update to outline bookmark icon
             } else {
                 Toast.makeText(this, "Failed to remove bookmark", Toast.LENGTH_SHORT).show()
             }
@@ -128,7 +131,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
+    private fun showLoading(isLoading: Boolean) {
+        detailBinding.pbDetail?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
     private fun setupRecyclerView() {
         reviewAdapter = ReviewAdapter()
         detailBinding.rvReviews.apply {

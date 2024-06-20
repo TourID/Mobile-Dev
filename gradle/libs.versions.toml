@@ -1,6 +1,6 @@
 [versions]
 activityKtx = "1.9.0"
-agp = "8.2.2"
+agp = "8.3.0"
 androidAsyncHttp = "1.4.10"
 circleimageview = "3.1.0"
 firebaseFirestore = "25.0.0"
