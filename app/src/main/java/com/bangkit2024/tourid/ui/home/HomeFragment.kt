@@ -1,28 +1,36 @@
 package com.bangkit2024.tourid.ui.home
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit2024.tourid.R
-import com.bangkit2024.tourid.adapter.AdapterItem
+import com.bangkit2024.tourid.adapter.RecommendationAdapter
 import com.bangkit2024.tourid.data.remote.response.WeatherResponse
 import com.bangkit2024.tourid.databinding.FragmentHomeBinding
 import com.bangkit2024.tourid.di.InjectionTourism
 import com.bumptech.glide.Glide
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
-    private lateinit var homeAdapter: AdapterItem
+    private lateinit var recommendationAdapter: RecommendationAdapter
     private val homeVM by viewModels<HomeViewModel> {
         InjectionTourism.provideViewModelFactory(requireContext())
     }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,17 +44,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeAdapter = AdapterItem()
-        binding?.rvHome?.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = homeAdapter
+        recommendationAdapter = RecommendationAdapter()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        binding?.apply {
+            rvHome.layoutManager = LinearLayoutManager(context)
+            rvHome.setHasFixedSize(true)
+            rvHome.adapter = recommendationAdapter
         }
-
-        val latitude = -6.2349
-        val longitude = 106.9896
-
-        homeVM.fetchWeatherByCoordinates(latitude, longitude)
 
         homeVM.isLoading.observe(viewLifecycleOwner) { loading ->
             showLoading(loading)
@@ -62,10 +67,43 @@ class HomeFragment : Fragment() {
             updateUI(weatherResponse)
         }
 
-        homeVM.showHomeList()
+        val userId = Firebase.auth.currentUser?.uid ?: ""
+        homeVM.fetchRecommendations(userId)
 
-        homeVM.homeTourList.observe(viewLifecycleOwner) { response ->
-            homeAdapter.submitList(response)
+        homeVM.recommendations.observe(viewLifecycleOwner) { recommendations ->
+            recommendationAdapter.submitList(recommendations)
+        }
+
+        getMyLocation()
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                getMyLocation()
+            } else {
+                showToast("Location permission denied")
+            }
+        }
+
+    private fun getMyLocation() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    location?.let {
+                        homeVM.fetchWeatherByCoordinates(it.latitude, it.longitude)
+                    } ?: run {
+                        showToast("Failed to get location")
+                    }
+                }
+        } else {
+            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 

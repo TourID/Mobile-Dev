@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit2024.tourid.BuildConfig
 import com.bangkit2024.tourid.data.remote.response.DetailResponse
+import com.bangkit2024.tourid.data.remote.response.Recommendation
 import com.bangkit2024.tourid.data.remote.response.ReviewsItem
 import com.bangkit2024.tourid.data.remote.response.TourResponseItem
+import com.bangkit2024.tourid.data.remote.response.UserRequest
 import com.bangkit2024.tourid.data.remote.response.WeatherResponse
 import com.bangkit2024.tourid.data.remote.retrofit.ApiService
 import com.bangkit2024.tourid.data.remote.retrofit.ApiWeatherService
@@ -22,16 +24,23 @@ class TourRepository(
 //    private val tourDao: DaoTourism,
 //    private val db: DatabaseTourism
 ) {
+
     suspend fun fetchDetailItem(id: Int): DetailResponse {
         return apiService.detailItem(id)
     }
-    suspend fun getHomeList(): List<TourResponseItem> {
-        return withContext(Dispatchers.IO) {
-            val response = apiService.tourHome()
-            response
+
+    fun getRecommendations(userId: String): LiveData<Result<List<Recommendation>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = withContext(Dispatchers.IO) {
+                apiService.getRecommendations(UserRequest(userId))
+            }
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            Log.d("TourRepository", "getRecommendations: ${e.message}")
+            emit(Result.Error(e.message.toString()))
         }
     }
-
     fun getListTour(category: String): LiveData<Result<List<TourResponseItem>>> = liveData {
         emit(Result.Loading)
         try {
@@ -66,14 +75,14 @@ class TourRepository(
         }
     }
 
-//    fun getBookmarkedTourism(): LiveData<List<EntityTourism>> {
-//        return tourDao.getBookmarkedTourism()
-//    }
+    suspend fun getBookmarkedTourism() {
+        return tourDao.getBookmarkedTourism()
+    }
 
-//    suspend fun setTourBookmark(news: EntityTourism, bookmarkState: Boolean) {
-//        news.isBookmarked = bookmarkState
-//        tourDao.updateTourism(news)
-//    }
+    suspend fun setTourBookmark(news: EntityTourism, bookmarkState: Boolean) {
+        news.isBookmarked = bookmarkState
+        tourDao.updateTourism(news)
+    }
 
     fun getWeatherByCoordinates(lat: Double, lon: Double, callback: (WeatherResponse?) -> Unit) {
         apiWeather.getWeatherByCoordinates(lat, lon, BuildConfig.weatherKey).enqueue(object :

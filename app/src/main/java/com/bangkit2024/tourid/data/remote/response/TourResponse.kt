@@ -28,3 +28,8 @@ data class TourResponseItem(
 	@field:SerializedName("placeName")
 	val placeName: String? = null
 )
+
+data class RequestBookmark(
+	val userId: String,
+	val placeId: Int
+)

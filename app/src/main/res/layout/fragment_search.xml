@@ -60,73 +60,73 @@
 
             <Button
                 android:id="@+id/btn_category_all"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/All"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btn_category_bahari"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/Bahari"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btn_category_budaya"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/Budaya"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btn_category_cagara"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/Cagara"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btn_category_perbelanjaan"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/perbelanjaan"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btn_category_ibadah"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/ibadah"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btn_category_hiburan"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="@string/hiburan"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
     </HorizontalScrollView>
 
