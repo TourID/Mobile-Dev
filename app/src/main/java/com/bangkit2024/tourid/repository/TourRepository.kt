@@ -6,6 +6,7 @@ import androidx.lifecycle.liveData
 import com.bangkit2024.tourid.BuildConfig
 import com.bangkit2024.tourid.data.remote.response.DetailResponse
 import com.bangkit2024.tourid.data.remote.response.Recommendation
+import com.bangkit2024.tourid.data.remote.response.RequestBookmark
 import com.bangkit2024.tourid.data.remote.response.ReviewsItem
 import com.bangkit2024.tourid.data.remote.response.TourResponseItem
 import com.bangkit2024.tourid.data.remote.response.UserRequest
@@ -75,13 +76,16 @@ class TourRepository(
         }
     }
 
-    suspend fun getBookmarkedTourism() {
-        return tourDao.getBookmarkedTourism()
+    suspend fun getBookmarks(userId: String): List<TourResponseItem> {
+        return apiService.getBookmarkUser(userId)
     }
 
-    suspend fun setTourBookmark(news: EntityTourism, bookmarkState: Boolean) {
-        news.isBookmarked = bookmarkState
-        tourDao.updateTourism(news)
+    suspend fun addBookmark(requestBookmark: RequestBookmark) {
+        apiService.addBookmarkUser(requestBookmark)
+    }
+
+    suspend fun deleteBookmark(requestBookmark: RequestBookmark) {
+        apiService.deleteBookmark(requestBookmark)
     }
 
     fun getWeatherByCoordinates(lat: Double, lon: Double, callback: (WeatherResponse?) -> Unit) {

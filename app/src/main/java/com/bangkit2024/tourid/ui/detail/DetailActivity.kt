@@ -48,21 +48,17 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
     private fun setupListeners() {
         detailBinding.btnArrow.setOnClickListener {
             finish()
         }
 
-//        detailBinding.btnBookmark.setOnClickListener {
-//            // Handle bookmark action
-//            val detail = detailVM.detail.value
-//            if (detail != null) {
-//                // Save to bookmarks
-//                detailVM.saveBookmark(detail)
-//                Toast.makeText(this, "Saved to bookmarks", Toast.LENGTH_SHORT).show()
-//            }
-//        }
+        detailBinding.btnBookmark.setOnClickListener {
+            val placeId = intent.getIntExtra(KEY_DETAIL, 0)
+            if (placeId != 0) {
+                detailVM.addBookmark(placeId)
+            }
+        }
 
         detailBinding.postReviewButton.setOnClickListener {
             val review = detailBinding.reviewInput.text.toString()
@@ -75,17 +71,18 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun observeViewModel() {
-        detailVM.isLoading.observe(this, Observer { isLoading ->
-        })
+        detailVM.isLoading.observe(this) { isLoading ->
+            // Handle loading state
+        }
 
-        detailVM.toastText.observe(this, Observer { event ->
+        detailVM.toastText.observe(this) { event ->
             event.getContentIfNotHandled()?.let { message ->
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
         detailVM.detail.observe(this) { detail ->
-            if (detail != null){
+            if (detail != null) {
                 detailBinding.titlePlace.text = detail.placeName
                 detailBinding.location.text = detail.city
                 detailBinding.description.text = detail.description
@@ -95,18 +92,33 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .centerCrop()
                     .into(detailBinding.ivDetail)
+
+                val location = LatLng(detail.lat as Double, detail.jsonMemberLong as Double)
+                mMap.clear()
+                mMap.addMarker(MarkerOptions().position(location).title(detail.placeName))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+
+                detail.reviews?.let { reviewAdapter.submitList(it.filterNotNull()) }
             }
-
-
-            val location = LatLng(detail.lat as Double, detail.jsonMemberLong as Double)
-            mMap.clear()
-            mMap.addMarker(MarkerOptions().position(location).title(detail.placeName))
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
-
-            detail.reviews?.let { reviewAdapter.submitList(it.filterNotNull()) }
         }
 
-        detailVM.reviewAdded.observe(this, Observer { reviewAdded ->
+        detailVM.bookmarkAdded.observe(this) { bookmarkAdded ->
+            if (bookmarkAdded) {
+                Toast.makeText(this, "Bookmark added successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to add bookmark", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        detailVM.bookmarkRemoved.observe(this) { bookmarkRemoved ->
+            if (bookmarkRemoved) {
+                Toast.makeText(this, "Bookmark removed successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to remove bookmark", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        detailVM.reviewAdded.observe(this) { reviewAdded ->
             if (reviewAdded) {
                 Toast.makeText(this, "Review added successfully", Toast.LENGTH_SHORT).show()
                 detailBinding.reviewInput.text.clear()
@@ -114,7 +126,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             } else {
                 Toast.makeText(this, "Failed to add review", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 
     private fun setupRecyclerView() {

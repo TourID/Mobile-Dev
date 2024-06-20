@@ -41,10 +41,10 @@ interface ApiService {
     @GET("{userId}")
     suspend fun getBookmarkUser(
         @Path("userId") userId: String
-    )
+    ): List<TourResponseItem>
 
     @POST("add-bookmark")
-    suspend fun addBookmarkUser9(
+    suspend fun addBookmarkUser(
         @Body requestBookmark: RequestBookmark
     )
 
