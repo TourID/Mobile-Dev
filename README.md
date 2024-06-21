@@ -4,7 +4,7 @@ TourID is a mobile application that provides recommendations for tourist attract
 ## Contributor
 | Name | GitHub | GitHub | LinkedIn |
 | ------ | ------ | ------ | ------ |
-| Aminuddin Ihsan | Android Developer | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github)](https://github.com/smerull) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/deriansyah-aulia-muharram) |
+| Aminuddin Ihsan | Android Developer | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github)](https://github.com/Aminuddinihsan20) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/aminuddin-ihsan-138389220/) |
 | Dhirsya Ramadhan Pattah | Android Developer | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github)](https://github.com/dhirsyaram) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/dhirsyarp) |
 
 # Tech Stack
